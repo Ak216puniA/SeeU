@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:seeu/view/signin_view.dart';
-import 'package:seeu/view/signup_view.dart';
+import 'package:seeu/helper/authenticate.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -10,7 +9,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -19,10 +18,10 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Color(0xFF26A69A),
+        primaryColor: const Color(0xFF26A69A),
         primarySwatch: Colors.teal,
       ),
-      home: const SignUp(),
+      home: const Authenticate(),
     );
   }
 }

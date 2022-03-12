@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:seeu/helper/authenticate.dart';
 import 'package:seeu/services/auth.dart';
+import 'package:seeu/services/database.dart';
+import 'package:seeu/view/chatlist_view.dart';
+import 'package:seeu/view/signin_view.dart';
 import 'package:seeu/widgets/widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class SignUp extends StatefulWidget {
-  const SignUp({ Key key }) : super(key: key);
+  final Function toggle;
+  SignUp(this.toggle);
+  const SignUp.a({ Key? key, required this.toggle }) : super(key: key);
 
   @override
   _SignUpState createState() => _SignUpState();
@@ -15,6 +21,7 @@ class _SignUpState extends State<SignUp> {
   final formkey = GlobalKey<FormState>();
 
   AuthMethods authMethods = new AuthMethods();
+  DatabaseMethods databaseMethods = new DatabaseMethods();
 
   TextEditingController usernameTextEdittingController = new TextEditingController();
   TextEditingController emailTextEdittingController = new TextEditingController();
@@ -23,12 +30,27 @@ class _SignUpState extends State<SignUp> {
   bool is_loading = false;
 
   signUpLoading(){
-    if(formkey.currentState.validate()){
+    if(formkey.currentState!.validate()){
+
+      Map<String, String> userInfoMap = {
+        "Name" : usernameTextEdittingController.text,
+        "Email" : emailTextEdittingController.text,
+      };
+
       setState(() {
         is_loading = true;
       });
       authMethods.signUpWithEmailAndPassword(emailTextEdittingController.text, passwordTextEdittingController.text)
-      .then((value){ print("$value");});
+      .then((value){ 
+        print("$value");
+
+        databaseMethods.uploadUserInfoToDatabase(userInfoMap);
+
+        Navigator.pushReplacement(context, MaterialPageRoute(
+          builder: (context) => ChatList()      
+        ));
+      
+      });
     }
   }
   @override
@@ -56,7 +78,7 @@ class _SignUpState extends State<SignUp> {
                     TextFormField(
                       validator: (entered_value){
                         return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                        .hasMatch(entered_value) ? null : "Invalid email id";
+                        .hasMatch(entered_value!) ? null : "Invalid email id";
                       },
                       controller: emailTextEdittingController,
                       style: inputTextStyle(),
@@ -114,10 +136,19 @@ class _SignUpState extends State<SignUp> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Have an account? ", style: inputTextStyle()),
-                  Text("Sign In", style: TextStyle(
-                    color: Colors.black87, fontSize: 17,
-                    decoration: TextDecoration.underline,
-                    )
+                  GestureDetector(
+                    onTap: (){
+                      widget.toggle;
+  
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text("Sign In", style: TextStyle(
+                        color: Colors.black87, fontSize: 17,
+                        decoration: TextDecoration.underline,
+                        )
+                      ),
+                    ),
                   )
                 ],
 
