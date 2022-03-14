@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:seeu/modal/user.dart';
@@ -9,6 +8,7 @@ class AuthMethods{
   Future signInWithEmailAndPassword(String email, String password) async {
 
     appUser? _userfromUser(User user){
+      // ignore: unnecessary_null_comparison
       return user!=null ? appUser(userId: user.uid) : null;
     }
 
