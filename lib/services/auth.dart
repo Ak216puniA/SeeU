@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:core';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:seeu/modal/user.dart';
@@ -8,14 +7,15 @@ class AuthMethods{
 
   Future signInWithEmailAndPassword(String email, String password) async {
 
-    appUser _userfromUser(User user){
+    appUser? _userfromUser(User user){
+      // ignore: unnecessary_null_comparison
       return user!=null ? appUser(userId: user.uid) : null;
     }
 
     try{
       UserCredential result = await _auth.signInWithEmailAndPassword(email: email, password: password);
-      User user = result.user;
-      return _userfromUser(user);
+      User? user = result.user;
+      return _userfromUser(user!);
         
     }catch(e){
       print(e.toString());
@@ -24,14 +24,14 @@ class AuthMethods{
 
   Future signUpWithEmailAndPassword(String email, String password) async {
 
-    appUser _userfromUser(User user){
+    appUser? _userfromUser(User user){
       return user!=null ? appUser(userId: user.uid) : null;
     }
 
     try{
       UserCredential result = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-      User user = result.user;
-      return _userfromUser(user);
+      User? user = result.user;
+      return _userfromUser(user!);
         
     }catch(e){
       print(e.toString());
