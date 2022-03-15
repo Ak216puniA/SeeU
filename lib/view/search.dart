@@ -76,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen> {
       Map<String, dynamic> chatroomMap = { "Users" : users , "Chatroom_id" : chatroomId};
       databaseMethods.createChatroom(chatroomId, chatroomMap);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const Chatroom()));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Chatroom(chatRoomId: chatroomId,)));
   }
 
   Widget searchList(){

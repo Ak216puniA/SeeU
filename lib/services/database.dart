@@ -18,4 +18,18 @@ class DatabaseMethods{
     FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).set(chatroomMap)
     .catchError((e){ print(e.toString());});
   }
+
+  addChatMessageToDatabase(String chatroomId , chatMap){
+    FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("Chats").add(chatMap);
+  }
+
+  getChatMessagesFromDatabase(String chatroomId) async{
+   // ignore: await_only_futures
+   return await FirebaseFirestore.instance.collection("Chatrooms").doc(chatroomId).collection("Chats").orderBy("TimeStamp",descending: false).snapshots();
+  }
+
+  getAllChatrooms(String username) async{
+    // ignore: await_only_futures
+    return await FirebaseFirestore.instance.collection("Chatrooms").where("Users", arrayContains: username).snapshots();
+  }
 }

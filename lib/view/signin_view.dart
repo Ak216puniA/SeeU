@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:seeu/helper/authenticate.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/services/auth.dart';
 import 'package:seeu/services/database.dart';
