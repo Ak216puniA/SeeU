@@ -4,8 +4,9 @@ import 'package:seeu/helper/constants.dart';
 import 'package:seeu/services/database.dart';
 
 class Chatroom extends StatefulWidget {
+  final String theOtherUser;
   final String chatRoomId;
-  const Chatroom({ Key? key , required this.chatRoomId}): super(key: key);
+  const Chatroom({ Key? key , required this.chatRoomId , required this.theOtherUser}): super(key: key);
 
   @override
   State<Chatroom> createState() => _ChatroomState();
@@ -60,14 +61,55 @@ class _ChatroomState extends State<Chatroom> {
     } 
   }
 
+  bool schedulerPermissionUser1=false;
+  bool schedulerPermissionUser2=false;
+
+  letsShareSchedule({required String chatroomId}){
+
+  }
+  
+
+
   
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title :const Text("SeeU")),
+      appBar: AppBar(
+        title: Row(children:  [
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            height: 40,
+            width: 40,
+            decoration: BoxDecoration(
+              color: Colors.teal[700],
+              borderRadius: BorderRadius.circular(25),
+            ),
+            child: Text(widget.theOtherUser.substring(0,1).toUpperCase() , 
+            style: const TextStyle(
+              color: Colors.white , 
+              fontSize: 20 , fontWeight: 
+              FontWeight.w400 , 
+              fontStyle: FontStyle.italic)
+              ),
+          ),
+          Text(widget.theOtherUser, style: const TextStyle(color: Colors.white , fontSize: 22 , fontWeight: FontWeight.w400))
+        ]),
+        actions: [
+          Container(
+            height: 50,
+            width: 50,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: BoxDecoration(
+              color: Colors.white30,
+              borderRadius: BorderRadius.circular(30)),
+            child: const Icon(Icons.schedule_rounded , color: Colors.red,))
+        ],) ,
       body: Stack(
         children: [
-          ChatMessageList(),
+          Container(
+            padding: const EdgeInsets.only(bottom: 70),
+            child: ChatMessageList()),
   
           Container(
             

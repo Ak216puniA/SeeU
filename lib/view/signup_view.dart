@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:seeu/helper/constants.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/services/auth.dart';
 import 'package:seeu/services/database.dart';
@@ -36,7 +37,7 @@ class _SignUpState extends State<SignUp> {
       };
 
       SharedPreference_Functions.saveUserNameSharedPreference(usernameTextEdittingController.text);
-      SharedPreference_Functions.saveUserEmailSharedPreference(usernameTextEdittingController.text);
+      SharedPreference_Functions.saveUserEmailSharedPreference(emailTextEdittingController.text);
 
       setState(() {
         isloading = true;
@@ -45,9 +46,11 @@ class _SignUpState extends State<SignUp> {
       authMethods.signUpWithEmailAndPassword(emailTextEdittingController.text, passwordTextEdittingController.text)
       .then((value){ 
       
-        databaseMethods.uploadUserInfoToDatabase(userInfoMap);
+        databaseMethods.uploadUserInfoToDatabase(userInfoMap , emailTextEdittingController.text);
 
         SharedPreference_Functions.saveUserLoggedInSharedPreference(true);
+
+        //Constants.myEmail = SharedPreference_Functions.getUserEmailSharedPreference() as String;
 
         Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => const ChatList()      

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:seeu/helper/authenticate.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/view/chatlist_view.dart';
+import 'package:seeu/view/noSchedule.dart';
+import 'package:seeu/view/noSchedule.dart';
 import 'package:seeu/view/signin_view.dart';
 
 void main() async {
@@ -43,13 +45,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'SeeU',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: const Color(0xFF26A69A),
         primarySwatch: Colors.teal,
       ),
       home: userIsLoggedIn ? const ChatList() : const Signin(),
+      //const NoSchedule(),
     );
   }
 }

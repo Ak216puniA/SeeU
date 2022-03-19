@@ -71,12 +71,18 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   createChatroomAndStartConvo(String userName){
+
       List<String> users = [userName, Constants.myName];
+      
       String chatroomId = getChatroomId(userName, Constants.myName);
-      Map<String, dynamic> chatroomMap = { "Users" : users , "Chatroom_id" : chatroomId};
+
+      Map<String, dynamic> chatroomMap;
+      
+      chatroomMap = { "Users" : users , "Chatroom_id" : chatroomId };
+     
       databaseMethods.createChatroom(chatroomId, chatroomMap);
 
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Chatroom(chatRoomId: chatroomId,)));
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Chatroom(chatRoomId: chatroomId, theOtherUser: userName,)));
   }
 
   Widget searchList(){
@@ -91,7 +97,7 @@ class _SearchScreenState extends State<SearchScreen> {
       onTap: (){
         // ignore: unrelated_type_equality_checks
         if(userEmail != SharedPreference_Functions.getUserEmailSharedPreference()){
-          createChatroomAndStartConvo(userName);
+            createChatroomAndStartConvo(userName);
         }else{
           // ignore: non_constant_identifier_names
           const snackBar = SnackBar(content: Text("You cannot create a chatroom with yourself"));

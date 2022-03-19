@@ -7,6 +7,10 @@ import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/services/auth.dart';
 import 'package:seeu/services/database.dart';
 import 'package:seeu/view/chatroom_view.dart';
+import 'package:seeu/view/createSchedule.dart';
+import 'package:seeu/view/editSchedule.dart';
+import 'package:seeu/view/noSchedule.dart';
+import 'package:seeu/view/schedule.dart';
 import 'package:seeu/view/search.dart';
 import 'package:seeu/view/signin_view.dart';
 
@@ -23,6 +27,16 @@ class _ChatListState extends State<ChatList> {
   DatabaseMethods databaseMethods = DatabaseMethods();
 
   Stream? chatroomsStream;
+
+  bool checkIfMadeBefore = false;
+
+  ifScheduleMadebefore() async {
+    await SharedPreference_Functions.getSchedulerCreatedOnceSharedPreference().then((value) {
+      checkIfMadeBefore = value!;
+      setState(() {
+      });
+    });
+  }
 
   Widget ChatroomsList(){
     return StreamBuilder(
@@ -52,6 +66,7 @@ class _ChatListState extends State<ChatList> {
 
   getUserInfo() async {
     Constants.myName = (await SharedPreference_Functions.getUserNameSharedPreference()) as String;
+    Constants.myEmail = (await SharedPreference_Functions.getUserEmailSharedPreference()) as String;
 
     databaseMethods.getAllChatrooms(Constants.myName).then((value){
       setState(() {
@@ -69,6 +84,7 @@ class _ChatListState extends State<ChatList> {
           GestureDetector(
             onTap: (){
               SharedPreference_Functions.saveUserLoggedInSharedPreference(false);
+              SharedPreference_Functions.saveSchedulerCreatedOnceSharedPreference(false);
               authMethods.signOut();
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Signin()));
             },
@@ -80,11 +96,34 @@ class _ChatListState extends State<ChatList> {
         ],
       ),
       body: ChatroomsList(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchScreen(),));
-          },
-        child: const Icon(Icons.search_rounded),
+
+      
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+
+          FloatingActionButton(
+            heroTag:  "scheduleHeroTag",
+            onPressed: () {
+              ifScheduleMadebefore();
+              checkIfMadeBefore ? 
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const Schedule()))
+               : Navigator.push(context, MaterialPageRoute(builder: (context) => const NoSchedule()));
+              //Navigator.push(context, MaterialPageRoute(builder: (context) => const NoSchedule()));
+              },
+            child: const Icon(Icons.schedule_rounded)
+          ),
+
+          const SizedBox(height: 8),
+
+          FloatingActionButton(
+            heroTag: "searchHeroTag",
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const SearchScreen(),));
+              },
+            child: const Icon(Icons.search_rounded),
+          ),
+        ],
       )
       
     );
@@ -101,7 +140,7 @@ class ChatroomTile extends StatelessWidget {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(
-          builder: (context) => Chatroom(chatRoomId: chatroomId,)      
+          builder: (context) => Chatroom(chatRoomId: chatroomId, theOtherUser: username,)      
         ));
       },
       child: Container(

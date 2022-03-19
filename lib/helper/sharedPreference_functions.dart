@@ -7,6 +7,7 @@ class SharedPreference_Functions{
   static String sharedPreferenceUserLoggedInKey = "ISLOGGEDINKEY";
   static String sharedPreferenceUserNameKey = "USERNAMEKEY";
   static String sharedPreferenceUserEmailKey = "USEREMAILKEY";
+  static String sharedPreferenceScheduleCreatedOnce = "SCHEDULECREATEDONCE";
 
 //setting (saving) information to sharedPreference
   static Future<bool> saveUserLoggedInSharedPreference(bool isUserLoggedIn) async{
@@ -24,6 +25,11 @@ class SharedPreference_Functions{
     return await prefs.setString(sharedPreferenceUserEmailKey, userEmail);
   }
 
+  static Future<bool> saveSchedulerCreatedOnceSharedPreference(bool hasScheduleCreatedOnce) async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setBool(sharedPreferenceScheduleCreatedOnce, hasScheduleCreatedOnce);
+  }
+
 //getting information stored from sharedPreference
   static Future<bool?> getUserLoggedInSharedPreference() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -38,5 +44,10 @@ class SharedPreference_Functions{
   static Future<String?> getUserEmailSharedPreference() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.getString(sharedPreferenceUserEmailKey);
+  }
+
+  static Future<bool?> getSchedulerCreatedOnceSharedPreference() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.getBool(sharedPreferenceScheduleCreatedOnce);
   }
 }

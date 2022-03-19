@@ -25,6 +25,7 @@ class AuthMethods{
   Future signUpWithEmailAndPassword(String email, String password) async {
 
     appUser? _userfromUser(User user){
+      // ignore: unnecessary_null_comparison
       return user!=null ? appUser(userId: user.uid) : null;
     }
 
