@@ -46,6 +46,7 @@ class _SigninState extends State<Signin> {
     authMethods.signInWithEmailAndPassword(emailTextEditingController.text , passwordTextEditingController.text).then((val) {
       if(val!=null){
          SharedPreference_Functions.saveUserLoggedInSharedPreference(true);
+         SharedPreference_Functions.saveSchedulerCreatedOnceSharedPreference(false);
          Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => const ChatList()      
         ));

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:seeu/helper/constants.dart';
 import 'package:seeu/services/database.dart';
@@ -29,6 +28,7 @@ class _ScheduleState extends State<Schedule> {
       }      
     });
     setState(() {
+      
     });
   }
 
@@ -42,11 +42,13 @@ class _ScheduleState extends State<Schedule> {
       }
     });
     setState(() {
+      
     });
   }
 
   @override
   void initState() {
+    clearScheduleLists();
     generateTimeListFromDatabase();
     generateEventListFromDatabase();
     super.initState();

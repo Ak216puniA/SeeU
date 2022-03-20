@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/view/createSchedule.dart';
-import 'package:seeu/view/editSchedule.dart';
 
 class NoSchedule extends StatefulWidget {
   const NoSchedule({ Key? key }) : super(key: key);

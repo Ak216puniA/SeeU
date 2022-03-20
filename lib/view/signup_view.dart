@@ -49,8 +49,7 @@ class _SignUpState extends State<SignUp> {
         databaseMethods.uploadUserInfoToDatabase(userInfoMap , emailTextEdittingController.text);
 
         SharedPreference_Functions.saveUserLoggedInSharedPreference(true);
-
-        //Constants.myEmail = SharedPreference_Functions.getUserEmailSharedPreference() as String;
+        SharedPreference_Functions.saveSchedulerCreatedOnceSharedPreference(false);
 
         Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => const ChatList()      
@@ -126,7 +125,7 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               const SizedBox(height: 8,),
-              Container(
+              /*Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
                 decoration: BoxDecoration(
@@ -135,7 +134,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 child: const Text("Sing Up with Google", style: TextStyle(color: Colors.white, fontSize: 21)),
               ),
-              const SizedBox(height: 11,),
+              const SizedBox(height: 11,),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

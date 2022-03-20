@@ -32,8 +32,8 @@ class _ChatListState extends State<ChatList> {
 
   ifScheduleMadebefore() async {
     await SharedPreference_Functions.getSchedulerCreatedOnceSharedPreference().then((value) {
-      checkIfMadeBefore = value!;
       setState(() {
+        checkIfMadeBefore = value!;
       });
     });
   }
@@ -109,7 +109,6 @@ class _ChatListState extends State<ChatList> {
               checkIfMadeBefore ? 
               Navigator.push(context, MaterialPageRoute(builder: (context) => const Schedule()))
                : Navigator.push(context, MaterialPageRoute(builder: (context) => const NoSchedule()));
-              //Navigator.push(context, MaterialPageRoute(builder: (context) => const NoSchedule()));
               },
             child: const Icon(Icons.schedule_rounded)
           ),

@@ -2,7 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:seeu/helper/constants.dart';
 import 'package:seeu/services/database.dart';
-import 'schedule.dart';
+import 'package:seeu/view/createSchedule.dart';
+import 'package:seeu/view/schedule.dart';
 
 class EditSchedule extends StatefulWidget {
   const EditSchedule({ Key? key }) : super(key: key);
@@ -35,6 +36,7 @@ class _EditScheduleState extends State<EditSchedule> {
       count=count1;
     });
     setState(() {
+      
     });
   }
 
@@ -46,6 +48,7 @@ class _EditScheduleState extends State<EditSchedule> {
       }
     });
     setState(() {
+      
     });
   }
 
@@ -65,22 +68,24 @@ class _EditScheduleState extends State<EditSchedule> {
 
     databaseMethods.uploadScheduleToDatabase(newScheduleMap, Constants.myEmail);
 
-    for(int i=0 ; i<count ; i++){
-      timeTextEditingController[i].text="";
-      eventTextEditingController[i].text="";
-    }
-
   }
 
-  clearScheduleLists(){
+  clearLists(){
     scheduleTimeList.clear();
     scheduleEventList.clear();
+    timeTextEditingController.clear();
+    eventTextEditingController.clear();
+    formkey.clear();
   }
 
    @override
   void initState() {
+    clearLists();
    createScheduleTimeListFromDataBase();
    createScheduleEventListFromDataBase();
+   setState(() {
+     
+   });
     super.initState();
   }  
 
@@ -90,7 +95,6 @@ class _EditScheduleState extends State<EditSchedule> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: (){
-            clearScheduleLists();
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Schedule()));
           }, 
           icon: const Icon(Icons.arrow_back)
@@ -100,14 +104,19 @@ class _EditScheduleState extends State<EditSchedule> {
       body: Stack(
         children: [
           Container(
-            margin: const EdgeInsets.only(bottom: 100),
+            margin: const EdgeInsets.only(bottom: 116),
             child: ListView.builder(
               itemCount: count,
               itemBuilder: (context,index){
                 formkey.add(GlobalKey<FormState>());
-                timeTextEditingController.add(TextEditingController(text: scheduleTimeList[index]));
-                eventTextEditingController.add(TextEditingController(text: scheduleEventList[index]));
-               
+                if(index<count1){
+                  timeTextEditingController.add(TextEditingController(text: scheduleTimeList[index]));
+                  eventTextEditingController.add(TextEditingController(text: scheduleEventList[index]));         
+                }else{
+                  timeTextEditingController.add(TextEditingController());
+                  eventTextEditingController.add(TextEditingController());
+                }
+                
                 return EditScheduleTile(i : index);
               }
             ),
@@ -117,17 +126,21 @@ class _EditScheduleState extends State<EditSchedule> {
             
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
-                height: 100,
+                height: 116,
                 child: Column(
                   children: [
-                    Row(
+                   /* Row(
                       children: [
                         GestureDetector(
                           onTap: (){
+                            /*timeTextEditingController.add(TextEditingController(text:"Time..."));
+                            eventTextEditingController.add(TextEditingController(text:"Event..."));*/
+                            setState(() {
                             scheduleTimeList.add("Time...");
                             scheduleEventList.add("Event...");
+                            });
                             setState(() {
-                            count++;
+                              count++;
                             });
                           },
                           child: Container(
@@ -161,8 +174,13 @@ class _EditScheduleState extends State<EditSchedule> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            scheduleTimeList.removeLast();
-                            scheduleTimeList.removeLast();
+                            
+                            /*setState(() {
+                              scheduleTimeList.removeLast();
+                              scheduleTimeList.removeLast();
+                              /*timeTextEditingController.removeLast();
+                              eventTextEditingController.removeLast();*/
+                            });*/
                             setState(() {
                               count--;
                             });
@@ -194,11 +212,33 @@ class _EditScheduleState extends State<EditSchedule> {
                           ),
                         )
                       ],
-                    ),
-                    const SizedBox(height: 6),
+                    ),*/
                     GestureDetector(
                       onTap: (){
-                        clearScheduleLists();
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CreateSchedule()));
+                      },
+                      child: Container(
+                        height: 45,
+                        padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 8),
+                        margin: const EdgeInsets.only(top: 4),
+                        decoration: BoxDecoration(
+                        color: Colors.green[200],
+                        borderRadius: BorderRadius.circular(40),
+                        border: Border.all(color: const Color(0xFF33691E) , width: 1)
+                        ),
+                        child: Text(
+                        "CREATE NEW SCHEDULE",
+                        style: TextStyle(
+                          color: Colors.green[900],
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 7),
+                    GestureDetector(
+                      onTap: (){
                         updateScheduleToDatabase();
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const Schedule()));
                       },

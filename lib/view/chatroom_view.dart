@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:seeu/helper/constants.dart';
 import 'package:seeu/services/database.dart';
+import 'package:seeu/view/takingToSchedule.dart';
 
 class Chatroom extends StatefulWidget {
   final String theOtherUser;
@@ -68,9 +68,6 @@ class _ChatroomState extends State<Chatroom> {
 
   }
   
-
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,14 +93,20 @@ class _ChatroomState extends State<Chatroom> {
           Text(widget.theOtherUser, style: const TextStyle(color: Colors.white , fontSize: 22 , fontWeight: FontWeight.w400))
         ]),
         actions: [
-          Container(
-            height: 50,
-            width: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-              color: Colors.white30,
-              borderRadius: BorderRadius.circular(30)),
-            child: const Icon(Icons.schedule_rounded , color: Colors.red,))
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> TalkingtoSchedule(talkingTo : widget.theOtherUser)));
+            },
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 7.5),
+              height: 30,
+              width: 40,
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              decoration: BoxDecoration(
+                color: Colors.white30,
+                borderRadius: BorderRadius.circular(30)),
+              child: const Icon(Icons.schedule_rounded , color: Colors.white,)),
+          )
         ],) ,
       body: Stack(
         children: [
