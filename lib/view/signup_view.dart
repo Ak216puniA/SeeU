@@ -36,7 +36,7 @@ class _SignUpState extends State<SignUp> {
       };
 
       SharedPreference_Functions.saveUserNameSharedPreference(usernameTextEdittingController.text);
-      SharedPreference_Functions.saveUserEmailSharedPreference(usernameTextEdittingController.text);
+      SharedPreference_Functions.saveUserEmailSharedPreference(emailTextEdittingController.text);
 
       setState(() {
         isloading = true;
@@ -45,9 +45,10 @@ class _SignUpState extends State<SignUp> {
       authMethods.signUpWithEmailAndPassword(emailTextEdittingController.text, passwordTextEdittingController.text)
       .then((value){ 
       
-        databaseMethods.uploadUserInfoToDatabase(userInfoMap);
+        databaseMethods.uploadUserInfoToDatabase(userInfoMap , emailTextEdittingController.text);
 
         SharedPreference_Functions.saveUserLoggedInSharedPreference(true);
+        SharedPreference_Functions.saveSchedulerCreatedOnceSharedPreference(false);
 
         Navigator.pushReplacement(context, MaterialPageRoute(
           builder: (context) => const ChatList()      
@@ -96,15 +97,6 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-
-              const SizedBox(height: 10,),
-              Container(
-                alignment: Alignment.centerRight,
-                child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Text("Forgot Password ?", style: inputTextStyle(),),
-              ),
-              ),
               const SizedBox(height: 10,),
               GestureDetector(
                 onTap: (){
@@ -123,16 +115,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               const SizedBox(height: 8,),
-              Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen[400],
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Text("Sing Up with Google", style: TextStyle(color: Colors.white, fontSize: 21)),
-              ),
-              const SizedBox(height: 11,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -140,7 +122,6 @@ class _SignUpState extends State<SignUp> {
                   GestureDetector(
                     onTap: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Signin()));
-  
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),
