@@ -33,13 +33,6 @@ class _SearchScreenState extends State<SearchScreen> {
         searchSnapshot[i]=val.docs[i];
       }
       });
-      /*for (var element in val.docs) {
-        setState(() {
-          // ignore: avoid_print
-        searchSnapshot.insert(0, element.data());
-        });
-      }
-      print(searchSnapshot);*/
     });
   }
 
@@ -63,11 +56,6 @@ class _SearchScreenState extends State<SearchScreen> {
     }
     if(b==false) return null;
   }
-  /*if(username1.substring(0,1).codeUnitAt(0) > username2.substring(0,1).codeUnitAt(0)){
-    return username2+"_"+username1;
-  }else{
-    return username1+"_"+username2;
-  }*/
   }
 
   createChatroomAndStartConvo(String userName){

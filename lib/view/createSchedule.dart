@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:seeu/helper/constants.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/services/database.dart';
 import 'package:seeu/view/chatlist_view.dart';
-import 'package:seeu/view/schedule.dart';
 
 class CreateSchedule extends StatefulWidget {
   const CreateSchedule({ Key? key }) : super(key: key);
@@ -25,6 +25,7 @@ class _CreateScheduleState extends State<CreateSchedule> {
   createScheduleToDatabase() async {
 
     SharedPreference_Functions.saveSchedulerCreatedOnceSharedPreference(true);
+    Constants.myEmail = await SharedPreference_Functions.getUserEmailSharedPreference() as String;
 
     List<String> timeList = List.filled(1, timeTextEditingController[0].text, growable: true);
     for(int i=1 ; i<count ; i++){
@@ -38,14 +39,10 @@ class _CreateScheduleState extends State<CreateSchedule> {
 
     Map<String, dynamic> scheduleMap = { "Time" : timeList , "Event" : eventList};
 
-    Constants.myEmail = await SharedPreference_Functions.getUserEmailSharedPreference() as String;
+    await FirebaseFirestore.instance.collection("Users").doc(Constants.myEmail).update({"SchedulerMadeOnce": "T"});
 
     await databaseMethods.uploadScheduleToDatabase(scheduleMap, Constants.myEmail);
 
-    /*for(int i=0 ; i<count ; i++){
-      timeTextEditingController[i].text="";
-      eventTextEditingController[i].text="";
-    }*/
   }
 
   @override

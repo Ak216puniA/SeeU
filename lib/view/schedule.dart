@@ -3,6 +3,7 @@ import 'package:seeu/helper/constants.dart';
 import 'package:seeu/services/database.dart';
 import 'package:seeu/view/chatlist_view.dart';
 import 'package:seeu/view/editSchedule.dart';
+import 'package:seeu/view/noSchedule.dart';
 
 class Schedule extends StatefulWidget {
   const Schedule({ Key? key }) : super(key: key);
@@ -21,14 +22,18 @@ class _ScheduleState extends State<Schedule> {
 
   generateTimeListFromDatabase() async{
     await databaseMethods.getDocument(Constants.myEmail).then((value) {
-      count1 = value.data()!["Time"].length;
-      print(count1);
-      for(int i=0 ; i<count1 ; i++){
-        scheduleTime.add(value.data()!["Time"][i]);
-      }      
-    });
-    setState(() {
+      if(value!=null){
+        count1 = value.data()!["Time"].length;
+        for(int i=0 ; i<count1 ; i++){
+          scheduleTime.add(value.data()!["Time"][i]);
+      }
+
+      setState(() {
       
+      });
+      }else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const NoSchedule()));
+      }     
     });
   }
 
@@ -36,14 +41,20 @@ class _ScheduleState extends State<Schedule> {
 
   generateEventListFromDatabase() async {
     await databaseMethods.getDocument(Constants.myEmail).then((value) {
-    count2 = value.data()!["Event"].length;
-      for(int i=0 ; i<count2 ; i++){
-        scheduleEvent.add(value.data()!["Event"][i]);
+      if(value!=null){
+        count2 = value.data()!["Event"].length;
+        for(int i=0 ; i<count2 ; i++){
+          scheduleEvent.add(value.data()!["Event"][i]);
       }
-    });
-    setState(() {
+      setState(() {
       
+      });
+      }else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const NoSchedule()));
+      }
+    
     });
+    
   }
 
   @override
@@ -87,7 +98,6 @@ class _ScheduleState extends State<Schedule> {
             margin: const EdgeInsets.only(bottom: 16),
             child: GestureDetector(
               onTap: (){
-                //clearScheduleLists();
                 Navigator.push(context, MaterialPageRoute(builder: (context)=> const EditSchedule()));
               },
               child: Container(
@@ -125,7 +135,6 @@ class ScheduleTile extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            //height: 50,
             width: 145,
             margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
             padding: const EdgeInsets.symmetric(horizontal: 6 , vertical: 12),
@@ -143,7 +152,6 @@ class ScheduleTile extends StatelessWidget {
           ),
 
           Container(
-            //height: 50,
             width: 230,
             margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
             padding: const EdgeInsets.symmetric(horizontal: 6 , vertical: 14),

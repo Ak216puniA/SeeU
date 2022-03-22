@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:seeu/helper/constants.dart';
 import 'package:seeu/services/database.dart';
-import 'package:seeu/view/takingToSchedule.dart';
+import 'package:seeu/view/talkingToSchedule.dart';
 
 class Chatroom extends StatefulWidget {
   final String theOtherUser;
@@ -18,14 +18,12 @@ class _ChatroomState extends State<Chatroom> {
   DatabaseMethods databaseMethods = DatabaseMethods();
 
   Stream? chatMessagesStream;
-  //late int n;
    @override
   void initState() {
     databaseMethods.getChatMessagesFromDatabase(widget.chatRoomId).then((value){
       
       setState(() {
         chatMessagesStream = value;
-        //n = 4;
       });
     });
     super.initState();
@@ -59,13 +57,6 @@ class _ChatroomState extends State<Chatroom> {
     databaseMethods.addChatMessageToDatabase(widget.chatRoomId, messageMap);
     messageTextEditingController.text = "";
     } 
-  }
-
-  bool schedulerPermissionUser1=false;
-  bool schedulerPermissionUser2=false;
-
-  letsShareSchedule({required String chatroomId}){
-
   }
   
   @override

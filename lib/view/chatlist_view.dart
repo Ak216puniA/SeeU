@@ -1,14 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:seeu/helper/authenticate.dart';
 import 'package:seeu/helper/constants.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/services/auth.dart';
 import 'package:seeu/services/database.dart';
 import 'package:seeu/view/chatroom_view.dart';
-import 'package:seeu/view/createSchedule.dart';
-import 'package:seeu/view/editSchedule.dart';
 import 'package:seeu/view/noSchedule.dart';
 import 'package:seeu/view/schedule.dart';
 import 'package:seeu/view/search.dart';
@@ -28,15 +24,17 @@ class _ChatListState extends State<ChatList> {
 
   Stream? chatroomsStream;
 
-  bool checkIfMadeBefore = false;
+  late bool checkIfMadeBefore;
 
-  ifScheduleMadebefore() async {
-    await SharedPreference_Functions.getSchedulerCreatedOnceSharedPreference().then((value) {
+  ifScheduleMadebefore() {
+    SharedPreference_Functions.getSchedulerCreatedOnceSharedPreference().then((value) {
       setState(() {
         checkIfMadeBefore = value!;
       });
     });
   }
+
+  
 
   Widget ChatroomsList(){
     return StreamBuilder(
@@ -61,6 +59,7 @@ class _ChatListState extends State<ChatList> {
   @override
   void initState() {
     getUserInfo();
+    ifScheduleMadebefore();
     super.initState();
   }
 
@@ -74,6 +73,8 @@ class _ChatListState extends State<ChatList> {
       });
     });
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +106,10 @@ class _ChatListState extends State<ChatList> {
           FloatingActionButton(
             heroTag:  "scheduleHeroTag",
             onPressed: () {
-              ifScheduleMadebefore();
-              checkIfMadeBefore ? 
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const Schedule()))
-               : Navigator.push(context, MaterialPageRoute(builder: (context) => const NoSchedule()));
-              },
+              checkIfMadeBefore ?
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> const Schedule())) 
+              : Navigator.push(context, MaterialPageRoute(builder: (context)=> const NoSchedule()));
+            },  
             child: const Icon(Icons.schedule_rounded)
           ),
 

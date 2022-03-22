@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:seeu/helper/authenticate.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/view/chatlist_view.dart';
-import 'package:seeu/view/noSchedule.dart';
-import 'package:seeu/view/noSchedule.dart';
 import 'package:seeu/view/signin_view.dart';
 
 void main() async {
@@ -41,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       });
     });
   }
-  // This widget is the root of your application.
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,7 +49,6 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.teal,
       ),
       home: userIsLoggedIn ? const ChatList() : const Signin(),
-      //const NoSchedule(),
     );
   }
 }

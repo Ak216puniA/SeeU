@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:seeu/helper/constants.dart';
 import 'package:seeu/helper/sharedPreference_functions.dart';
 import 'package:seeu/services/auth.dart';
 import 'package:seeu/services/database.dart';
@@ -98,15 +97,6 @@ class _SignUpState extends State<SignUp> {
                   ],
                 ),
               ),
-
-              const SizedBox(height: 10,),
-              Container(
-                alignment: Alignment.centerRight,
-                child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                child: Text("Forgot Password ?", style: inputTextStyle(),),
-              ),
-              ),
               const SizedBox(height: 10,),
               GestureDetector(
                 onTap: (){
@@ -125,16 +115,6 @@ class _SignUpState extends State<SignUp> {
                 ),
               ),
               const SizedBox(height: 8,),
-              /*Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen[400],
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: const Text("Sing Up with Google", style: TextStyle(color: Colors.white, fontSize: 21)),
-              ),
-              const SizedBox(height: 11,),*/
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -142,7 +122,6 @@ class _SignUpState extends State<SignUp> {
                   GestureDetector(
                     onTap: (){
                       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Signin()));
-  
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 8),

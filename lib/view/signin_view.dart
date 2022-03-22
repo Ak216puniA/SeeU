@@ -89,14 +89,6 @@ class _SigninState extends State<Signin> {
                       decoration: textfieldInputDecoration("Password"),
                     ),
                     const SizedBox(height: 10,),
-                    Container(
-                      alignment: Alignment.centerRight,
-                      child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                      child: Text("Forgot Password ?", style: inputTextStyle(),),
-                    ),
-                    ),
-                    const SizedBox(height: 10,),
                     GestureDetector(
                       onTap: (){
                         SignUserIn();
@@ -112,16 +104,6 @@ class _SigninState extends State<Signin> {
                         ),
                         child: const Text("Sign In", style: TextStyle(color: Colors.white , fontSize: 21),),
                       ),
-                    ),
-                    const SizedBox(height: 8,),
-                    Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(vertical: 17, horizontal: 20),
-                      decoration: BoxDecoration(
-                        color: Colors.lightGreen[400],
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Text("Sing In with Google", style: TextStyle(color: Colors.white, fontSize: 21)),
                     ),
                     const SizedBox(height: 11,),
                     Row(

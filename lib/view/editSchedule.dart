@@ -129,90 +129,6 @@ class _EditScheduleState extends State<EditSchedule> {
                 height: 116,
                 child: Column(
                   children: [
-                   /* Row(
-                      children: [
-                        GestureDetector(
-                          onTap: (){
-                            /*timeTextEditingController.add(TextEditingController(text:"Time..."));
-                            eventTextEditingController.add(TextEditingController(text:"Event..."));*/
-                            setState(() {
-                            scheduleTimeList.add("Time...");
-                            scheduleEventList.add("Event...");
-                            });
-                            setState(() {
-                              count++;
-                            });
-                          },
-                          child: Container(
-                            width: 195,
-                            height: 45,
-                            padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 6),
-                            margin: const EdgeInsets.only(right: 7),
-                            decoration: BoxDecoration(
-                              color: Colors.red[200],
-                              borderRadius: BorderRadius.circular(40),
-                              border: Border.all(color: const Color(0xFFB71C1C) , width: 1)
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.add,
-                                  size: 28,
-                                  color: Colors.red[900]
-                                ),
-                                Text(
-                                  "ADD EVENT",
-                                  style: TextStyle(
-                                    color: Colors.red[900],
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: (){
-                            
-                            /*setState(() {
-                              scheduleTimeList.removeLast();
-                              scheduleTimeList.removeLast();
-                              /*timeTextEditingController.removeLast();
-                              eventTextEditingController.removeLast();*/
-                            });*/
-                            setState(() {
-                              count--;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 10 , vertical: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.red[200],
-                              borderRadius: BorderRadius.circular(40),
-                              border: Border.all(color: const Color(0xFFB71C1C) , width: 1)
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.remove,
-                                  color: Colors.red[900],
-                                  size: 28,
-                                ),
-                                Text(
-                                  "DELETE EVENT",
-                                  style: TextStyle(
-                                    color: Colors.red[900],
-                                    fontSize: 22,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      ],
-                    ),*/
                     GestureDetector(
                       onTap: (){
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const CreateSchedule()));
@@ -283,7 +199,6 @@ class EditScheduleTile extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              //height: 50,
               width: 145,
               margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
               padding: const EdgeInsets.symmetric(horizontal: 6 ),
@@ -306,7 +221,6 @@ class EditScheduleTile extends StatelessWidget {
             ),
       
             Container(
-              //height: 50,
               width: 230,
               margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               padding: const EdgeInsets.symmetric(horizontal: 6 ,vertical: 1.2),
