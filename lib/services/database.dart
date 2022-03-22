@@ -45,4 +45,12 @@ class DatabaseMethods{
   getDocument(String userEmail) async{
     return await FirebaseFirestore.instance.collection("Users").doc(userEmail).get();
   }
+
+  getUserConsentOnSharingSchedule(String chatRoomId) async{
+    return await FirebaseFirestore.instance.collection("Chatrooms").doc(chatRoomId).get();
+  }
+
+  updateUserConsentOnSharingSchedule(String chatRoomId , bool currentConsent) async{
+    await FirebaseFirestore.instance.collection("Chatrooms").doc(chatRoomId).update({Constants.myName+"Allows": !currentConsent});
+  }
 }
