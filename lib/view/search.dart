@@ -66,7 +66,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
       Map<String, dynamic> chatroomMap;
       
-      chatroomMap = { "Users" : users , "Chatroom_id" : chatroomId };
+      chatroomMap = { "Users" : users , "Chatroom_id" : chatroomId , userName+"Allows" : false , Constants.myName+"Allows" : false};
      
       databaseMethods.createChatroom(chatroomId, chatroomMap);
 

@@ -18,6 +18,16 @@ class _ChatroomState extends State<Chatroom> {
   DatabaseMethods databaseMethods = DatabaseMethods();
 
   Stream? chatMessagesStream;
+  bool meallows = false;
+  bool theOtherUserallows = false;
+
+  getShareableSchedulerConsentInfo(String chatRoomId , String user){
+    databaseMethods.getUserConsentOnSharingSchedule(chatRoomId).then((val){
+      theOtherUserallows = val.data()[user+"Allows"];
+      print(theOtherUserallows);
+      meallows = val.data()[Constants.myName+"Allows"];
+    });
+  }
    @override
   void initState() {
     databaseMethods.getChatMessagesFromDatabase(widget.chatRoomId).then((value){
@@ -25,6 +35,9 @@ class _ChatroomState extends State<Chatroom> {
       setState(() {
         chatMessagesStream = value;
       });
+    });
+    setState(() {
+      getShareableSchedulerConsentInfo(widget.chatRoomId , widget.theOtherUser);
     });
     super.initState();
   }
@@ -86,7 +99,14 @@ class _ChatroomState extends State<Chatroom> {
         actions: [
           GestureDetector(
             onTap: (){
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> TalkingtoSchedule(talkingTo : widget.theOtherUser)));
+              setState(() {
+                databaseMethods.updateUserConsentOnSharingSchedule(widget.chatRoomId, meallows);
+                meallows = !meallows;
+              });
+
+              if(meallows && theOtherUserallows == true){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> TalkingtoSchedule(talkingTo : widget.theOtherUser)));
+              }
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 7.5),
@@ -94,9 +114,15 @@ class _ChatroomState extends State<Chatroom> {
               width: 40,
               padding: const EdgeInsets.symmetric(horizontal: 4),
               decoration: BoxDecoration(
-                color: Colors.white30,
+                color: Colors.white54,
                 borderRadius: BorderRadius.circular(30)),
-              child: const Icon(Icons.schedule_rounded , color: Colors.white,)),
+              child: meallows && theOtherUserallows ? 
+              const Icon(Icons.schedule_rounded , color: Colors.teal) : 
+                (meallows || theOtherUserallows ?
+                const Icon(Icons.schedule_rounded, color: Colors.blue) :
+                  const Icon(Icons.schedule_rounded, color: Colors.red) 
+                )      
+             ),
           )
         ],) ,
       body: Stack(
