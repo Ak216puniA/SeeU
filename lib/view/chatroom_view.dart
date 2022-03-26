@@ -117,7 +117,7 @@ class _ChatroomState extends State<Chatroom> {
                 color: Colors.white54,
                 borderRadius: BorderRadius.circular(30)),
               child: meallows && theOtherUserallows ? 
-              const Icon(Icons.schedule_rounded , color: Colors.teal) : 
+              const Icon(Icons.schedule_rounded , color: Colors.yellow) : 
                 (meallows || theOtherUserallows ?
                 const Icon(Icons.schedule_rounded, color: Colors.blue) :
                   const Icon(Icons.schedule_rounded, color: Colors.red) 
